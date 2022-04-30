@@ -25,7 +25,7 @@
 #if !defined is_null
 	#define is_null(%1) ((!(%1[0])) || (((%1[0]) == '\1') && (!(%1[1]))))
 #endif
-#if PRESSED
+#if !defined PRESSED
 	#define PRESSED(%0) \
     (((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
 #endif

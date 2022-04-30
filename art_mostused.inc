@@ -15,8 +15,17 @@
 	##
 
 */
-stock PlayerPlayAnimWithPlayer(playerid, targetid, animid, bool:InFront = false){
-
+stock PlayerPlayAnimWithPlayer(playerid, targetid, const anim_lib[], const anim_name[], anim_time, bool:InFront = false){
+	new Float:pp_x, Float:pp_y, Float:pp_z, Float: pp_r;
+	GetPlayerPos(playerid, pp_x, pp_y, pp_z);
+	GetPlayerFacingAngle(playerid, pp_r);
+	if(InFront == true || InFront == 1){
+		SetPlayerPos(targetid, pp_x + 1.0, pp_y + 1.0, pp_z);
+		SetPlayerFacingAngle(targetid, pp_r + 180.0);
+	}
+	ClearAnimations(targetid, 1);
+	ClearAnimations(playerid, 1);
+	SetTimerEx("__ARTDSL_PPAWP_Exec", 1000, false, "ddssd", playerid, targetid, anim_lib, anim_name, anim_time);
 }
 stock is_integer(const number[]){ 
 	new num_size = strlen(number);
@@ -33,15 +42,24 @@ stock is_integer(const number[]){
 }
 stock is_float(const number[]){
 	new hasDot = 0;
+	new hasMinus = 0;
 	new dotPos = 0;
+	new minusPos = 0;
 	if(strfind(number, ".") != -1){
 		hasDot = 1;
 		dotPos = strfind(number, ".");
+	}
+	if(strfind(number, "-") != -1){
+		hasMinus = 1;
+		minusPos = strfind(number, "-");
 	}
 	if(hasDot == 1){
 		new strNum[30];
 		strcat(strNum, number, sizeof(strNum));
 		strdel(strNum, dotPos, dotPos);
+		if(hasMinus == 1){
+			strdel(strNum, minusPos, minusPos);
+		}
 		if(is_integer(strNum)){
 			return true;
 		}else{
@@ -50,6 +68,16 @@ stock is_float(const number[]){
 	}else{
 		return false;
 	}
+}
+stock RemoveVendingMachines(playerid){
+	RemoveBuildingForPlayer(playerid, 18885, 0.0, 0.0, 0.0, 15000.0);
+	RemoveBuildingForPlayer(playerid, 1209, 0.0, 0.0, 0.0, 15000.0);
+	RemoveBuildingForPlayer(playerid, 1776, 0.0, 0.0, 0.0, 15000.0);
+	RemoveBuildingForPlayer(playerid, 955, 0.0, 0.0, 0.0, 15000.0);
+	RemoveBuildingForPlayer(playerid, 1775, 0.0, 0.0, 0.0, 15000.0);
+	RemoveBuildingForPlayer(playerid, 956, 0.0, 0.0, 0.0, 15000.0);
+	RemoveBuildingForPlayer(playerid, 1302, 0.0, 0.0, 0.0, 15000.0);
+	RemoveBuildingForPlayer(playerid, 1977, 0.0, 0.0, 0.0, 15000.0);
 }
 stock GetXYInFrontOfCordinate(Float:x_cord, Float:y_cord, Float:r_cord, Float:distance = 10.0, &Float:return_x_cord, &Float:return_y_cord){
 	return_x_cord = x_cord + (distance * floatsin(-r_cord, degrees));
@@ -133,4 +161,9 @@ stock ClearChat(){
 		SendClientMessageToAll(-1, " ");
 	}
 	SendClientMessageToAll(-1, "Chat clear by an Administrator");
+}
+forward __ARTDSL_PPAWP_Exec(playerid, targetid, const anim_lib[], const anim_name[], anim_time);
+public __ARTDSL_PPAWP_Exec(playerid, targetid, const anim_lib[], const anim_name[], anim_time){
+	ApplyAnimation(playerid, anim_lib, anim_name, 4.1, false, 0, 0, false, anim_time, 1);
+	ApplyAnimation(targetid, anim_lib, anim_name, 4.1, false, 0, 0, false, anim_time, 1);
 }
