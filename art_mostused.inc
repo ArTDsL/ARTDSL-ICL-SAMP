@@ -28,6 +28,9 @@ stock PlayerPlayAnimWithPlayer(playerid, targetid, const anim_lib[], const anim_
 	SetTimerEx("__ARTDSL_PPAWP_Exec", 1000, false, "ddssd", playerid, targetid, anim_lib, anim_name, anim_time);
 }
 stock is_integer(const chr[]){ //TESTED [OK]
+	if(strlen(chr) == 0){
+		return 0;
+	}
 	new isNegative = 0;
 	new tpos = 0;
 	if(strfind(chr, "-") != -1){
@@ -39,14 +42,14 @@ stock is_integer(const chr[]){ //TESTED [OK]
 		strcat(stkey, chr, sizeof(stkey));
 		strdel(stkey, tpos, tpos + 1);
 		for(new n = 0; n < strlen(stkey); n++){
-			if(stkey[n] < '0' || stkey[n] > '9'){
+			if(stkey[n] < '0' || stkey[n] > '9' || stkey[n] == '!' || stkey[n] == '%'){
 				return 0;
 			}
 		}
 		return 1;
 	}else{
 		for(new n = 0; n < strlen(chr); n++){
-			if(chr[n] < '0' || chr[n] > '9'){
+			if(chr[n] < '0' || chr[n] > '9' || chr[n] == '!' || chr[n] == '%'){
 				return 0;
 			}
 		}
