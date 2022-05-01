@@ -27,20 +27,33 @@ stock PlayerPlayAnimWithPlayer(playerid, targetid, const anim_lib[], const anim_
 	ClearAnimations(playerid, 1);
 	SetTimerEx("__ARTDSL_PPAWP_Exec", 1000, false, "ddssd", playerid, targetid, anim_lib, anim_name, anim_time);
 }
-stock is_integer(const number[]){ 
-	new num_size = strlen(number);
-	if(num_size == 0){
-		return false;
-	}else{
-		for(new nm = 0; nm < num_size; nm++){
-			if(number[nm] < '0' || number[nm] > '9' || number[nm] == '!' || number[nm] == '%'){
-				return false;
-			} 
-		}
+stock is_integer(const chr[]){ //TESTED [OK]
+	new isNegative = 0;
+	new tpos = 0;
+	if(strfind(chr, "-") != -1){
+		isNegative = 1;
+		tpos = strfind(chr, "-");
 	}
-	return true;
+	if(isNegative == 1){
+		new stkey[11];
+		strcat(stkey, chr, sizeof(stkey));
+		strdel(stkey, tpos, tpos + 1);
+		for(new n = 0; n < strlen(stkey); n++){
+			if(stkey[n] < '0' || stkey[n] > '9'){
+				return 0;
+			}
+		}
+		return 1;
+	}else{
+		for(new n = 0; n < strlen(chr); n++){
+			if(chr[n] < '0' || chr[n] > '9'){
+				return 0;
+			}
+		}
+		return 1;
+	}
 }
-stock is_float(const number[]){
+stock is_float(const number[]){ // TESTED [OK]
 	new hasDot = 0;
 	new hasMinus = 0;
 	new dotPos = 0;
@@ -60,16 +73,17 @@ stock is_float(const number[]){
 		if(hasMinus == 1){
 			strdel(strNum, minusPos, minusPos);
 		}
-		if(is_integer(strNum)){
+		if(is_integer(strNum) == 1){
 			return true;
 		}else{
-			return true;
+			return false;
 		}
 	}else{
 		return false;
 	}
 }
-stock RemoveVendingMachines(playerid){
+
+stock RemoveVendingMachines(playerid){ //TESTED [OK]
 	RemoveBuildingForPlayer(playerid, 18885, 0.0, 0.0, 0.0, 15000.0);
 	RemoveBuildingForPlayer(playerid, 1209, 0.0, 0.0, 0.0, 15000.0);
 	RemoveBuildingForPlayer(playerid, 1776, 0.0, 0.0, 0.0, 15000.0);
@@ -79,18 +93,18 @@ stock RemoveVendingMachines(playerid){
 	RemoveBuildingForPlayer(playerid, 1302, 0.0, 0.0, 0.0, 15000.0);
 	RemoveBuildingForPlayer(playerid, 1977, 0.0, 0.0, 0.0, 15000.0);
 }
-stock GetXYInFrontOfCordinate(Float:x_cord, Float:y_cord, Float:r_cord, Float:distance = 10.0, &Float:return_x_cord, &Float:return_y_cord){
+stock GetXYInFrontOfCordinate(Float:x_cord, Float:y_cord, Float:r_cord, Float:distance = 10.0, &Float:return_x_cord, &Float:return_y_cord){ //TESTED [OK]
 	return_x_cord = x_cord + (distance * floatsin(-r_cord, degrees));
 	return_y_cord =  y_cord + (distance * floatcos(-r_cord, degrees));
 }
-stock GetXYInFrontOfPlayer(playerid, Float:distance = 10.0, &Float:return_x_cord, &Float:return_y_cord){
+stock GetXYInFrontOfPlayer(playerid, Float:distance = 10.0, &Float:return_x_cord, &Float:return_y_cord){ //TESTED [OK]
 	new Float:ppos_x, Float:ppos_y, Float:ppos_z, Float:ppos_r;
 	GetPlayerPos(playerid, ppos_x, ppos_y, ppos_z);
 	GetPlayerFacingAngle(playerid, ppos_r);
 	return_x_cord = ppos_x + (distance * floatsin(-ppos_r, degrees));
 	return_y_cord =  ppos_y + (distance * floatcos(-ppos_r, degrees));
 }
-stock inline_format(const formato[], params[]){
+stock inline_format(const formato[], params[]){ //TESTED [OK]
 	#pragma warning disable 209 //remove warning de return
 	new num_parameters = 0;
 	for(new i = 0; i < sizeof(params[]); i++){
@@ -135,7 +149,7 @@ stock inline_format(const formato[], params[]){
 	}
 }
 #pragma warning enable 209 // Habilita warning de return, após carregar!
-stock GetVehicleSeatsInfo(vehicleid, &driver, &passager, &left_backseat, &right_backseat){
+stock GetVehicleSeatsInfo(vehicleid, &driver, &passager, &left_backseat, &right_backseat){ //TESTED [OK]
 	if(!IsValidVehicle(vehicleid)){
 		return -1;
 	}
@@ -156,7 +170,7 @@ stock GetVehicleSeatsInfo(vehicleid, &driver, &passager, &left_backseat, &right_
 		}
 	}
 }
-stock ClearChat(){
+stock ClearChat(){ //TESTED [OK]
 	for(new i = 0; i < 100; i++){
 		SendClientMessageToAll(-1, " ");
 	}
