@@ -72,17 +72,17 @@ stock is_float(const number[]){ // TESTED [OK]
 	if(hasDot == 1){
 		new strNum[30];
 		strcat(strNum, number, sizeof(strNum));
-		strdel(strNum, dotPos, dotPos);
+		strdel(strNum, dotPos, dotPos + 1);
 		if(hasMinus == 1){
-			strdel(strNum, minusPos, minusPos);
+			strdel(strNum, minusPos, minusPos + 1);
 		}
 		if(is_integer(strNum) == 1){
-			return true;
+			return 1;
 		}else{
-			return false;
+			return 0;
 		}
 	}else{
-		return false;
+		return 0;
 	}
 }
 
