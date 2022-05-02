@@ -11,22 +11,20 @@
 
 _**SA-MP**_
 
-- Create a folder name `ARTDSL` in your `includes` folder;
-- Copy all `.inc` files to that folder;
+- Copy folder `ARTDSL` from [includes](includes) to your **Pawno** `include` folder;
 - Include `ARTDSL/ART.inc` in your gamemode header;
 ```pawn
 #include    <ARTDSL/ART.inc>
 ```
-- Copy **ARTDSL.dll**(_Windows_)/**ARTDSL.so**(_Linux_) into `plugins` folder, on samp server $root;
+- Copy **ARTDSL.dll**(_Windows_)/**ARTDSL.so**(_Linux_) from [plugins](plugins) to your server `plugins` folder, on samp server $root;
 - Reference `ARTDSL` on `plugins` line in your `server.cfg` file.
 
 _**OPEN.MP**_
 
-- Create a folder name `ARTDSL` in your `includes` folder;
-- Copy all `.inc` files to that folder;
+- Copy folder `ARTDSL` from [includes](includes) to your **Pawno** `include` folder;
 - Include `ARTDSL/ART.inc` in your gamemode header;
 ```pawn
 #include    <ARTDSL/ART.inc>
 ```
-- Copy **ARTDSL.dll**(_Windows_)/**ARTDSL.so**(_Linux_) into `components` folder, on omp server $root;
+- Copy **ARTDSL.dll**(_Windows_)/**ARTDSL.so**(_Linux_) from [omp-components](omp-components)ne to your `components` folder, on omp server $root;
 - Reference `ARTDSL` on `server.cfg`/`config.json`.
