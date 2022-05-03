@@ -85,7 +85,6 @@ stock is_float(const number[]){ // TESTED [OK]
 		return 0;
 	}
 }
-
 stock RemoveVendingMachines(playerid){ //TESTED [OK]
 	RemoveBuildingForPlayer(playerid, 18885, 0.0, 0.0, 0.0, 15000.0);
 	RemoveBuildingForPlayer(playerid, 1209, 0.0, 0.0, 0.0, 15000.0);
@@ -107,51 +106,9 @@ stock GetXYInFrontOfPlayer(playerid, Float:distance = 10.0, &Float:return_x_cord
 	return_x_cord = ppos_x + (distance * floatsin(-ppos_r, degrees));
 	return_y_cord =  ppos_y + (distance * floatcos(-ppos_r, degrees));
 }
-stock inline_format(const formato[], params[]){ //TESTED [OK]
-	#pragma warning disable 209 //remove warning de return
-	new num_parameters = 0;
-	for(new i = 0; i < sizeof(params[]); i++){
-		num_parameters++;
-	}
-	switch(num_parameters){
-		case 1:{ 
-			new str[256];
-			format(str, sizeof(str), formato, params[0]);
-			return str;
-		}
-		case 2:{
-			new str[256];
-			format(str, sizeof(str), formato, params[0], params[1]);
-			return str;
-		}
-		case 3:{
-			new str[256];
-			format(str, sizeof(str), formato, params[0], params[1], params[2]);
-			return str;
-		}
-		case 4:{
-			new str[256];
-			format(str, sizeof(str), formato, params[0], params[1], params[2], params[3]);
-			return str;
-		}
-		case 5:{
-			new str[256];
-			format(str, sizeof(str), formato, params[0], params[1], params[2], params[3], params[4]);
-			return str;
-		}
-		case 6:{
-			new str[256];
-			format(str, sizeof(str), formato, params[0], params[1], params[2], params[3], params[4], params[5]);
-			return str;
-		}
-		case 7:{
-			new str[256];
-			format(str, sizeof(str), formato, params[0], params[1], params[2], params[3], params[4], params[5], params[6]);
-			return str;
-		}
-	}
+stock __ARTDSL_ret_inlineMsg(){
+	return __ARTDSL_inlinemsg;
 }
-#pragma warning enable 209 // Habilita warning de return, após carregar!
 stock GetVehicleSeatsInfo(vehicleid, &driver, &passager, &left_backseat, &right_backseat){ //TESTED [OK]
 	if(!IsValidVehicle(vehicleid)){
 		return -1;
